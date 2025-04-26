@@ -1,13 +1,10 @@
-// A screen that allows users to take a picture using a given camera.
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/services/api_service.dart';
 import 'package:provider/provider.dart';
 
-// A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({super.key, required this.camera});
 
@@ -24,22 +21,16 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   void initState() {
     super.initState();
-    // To display the current output from the Camera,
-    // create a CameraController.
     _controller = CameraController(
-      // Get a specific camera from the list of available cameras.
       widget.camera,
-      // Define the resolution to use.
       ResolutionPreset.medium,
+      enableAudio: false,
     );
-
-    // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _controller.initialize();
   }
 
   @override
   void dispose() {
-    // Dispose of the controller when the widget is disposed.
     _controller.dispose();
     super.dispose();
   }
@@ -47,68 +38,74 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // You must wait until the controller is initialized before displaying the
-      // camera preview. Use a FutureBuilder to display a loading spinner until the
-      // controller has finished initializing.
+      backgroundColor: const Color(0xFFF4E6E6), // Light pink
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            // If the Future is complete, display the preview.
-            return CameraPreview(_controller);
+            return Stack(
+              children: [
+                CameraPreview(_controller),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    color: const Color(0xFF482B0C), // Dark brown
+                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 0), // Empty space to center button
+                        GestureDetector(
+                          onTap: _takePicture,
+                          child: Container(
+                            width: 70,
+                            height: 70,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE58A1F), // Orange button
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16), 
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
           } else {
-            // Otherwise, display a loading indicator.
             return const Center(child: CircularProgressIndicator());
           }
         },
       ),
-      floatingActionButton: Consumer<AppModel>(
-        builder: (context, value, child) {
-          var setter = context.read<AppModel>();
-          var msgr = ScaffoldMessenger.of(context);
-          return FilledButton(
-            onPressed: () async {
-              // Take the Picture in a try / catch block. If anything goes wrong,
-              // catch the error.
-              try {
-                // Ensure that the camera is initialized.
-                await _initializeControllerFuture;
-
-                // Attempt to take a picture and get the file `image`
-                // where it was saved.
-                final image = await _controller.takePicture();
-
-                if (!context.mounted) return;
-
-                File file = File(image.path);
-
-                String body = await ApiService.uploadImage(setter.token, file);
-
-                // If the picture was taken, display it on a new screen.
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DisplayPictureScreen(
-                      // Pass the automatically generated path to
-                      // the DisplayPictureScreen widget.
-                      imagePath: image.path,
-                    ),
-                  ),
-                );
-              } catch (e) {
-                // If an error occurs, log the error to the console.
-                msgr.showSnackBar(SnackBar(content: Text('Error: $e')));
-                debugPrint(e.toString());
-              }
-            },
-            child: const Icon(Icons.camera_alt),
-          );
-        },
-      ),
     );
+  }
+
+  Future<void> _takePicture() async {
+    var setter = context.read<AppModel>();
+    var msgr = ScaffoldMessenger.of(context);
+
+    try {
+      await _initializeControllerFuture;
+      final image = await _controller.takePicture();
+
+      if (!mounted) return;
+
+      File file = File(image.path);
+      String body = await ApiService.uploadImage(setter.token, file);
+
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => DisplayPictureScreen(imagePath: image.path),
+        ),
+      );
+    } catch (e) {
+      msgr.showSnackBar(SnackBar(content: Text('Error: $e')));
+      debugPrint(e.toString());
+    }
   }
 }
 
-// A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
 
@@ -117,10 +114,12 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
+      appBar: AppBar(
+        title: const Text('Display the Picture'),
+        backgroundColor: const Color(0xFF482B0C),
+      ),
+      backgroundColor: const Color(0xFFF4E6E6),
+      body: Center(child: Image.file(File(imagePath))),
     );
   }
 }
