@@ -68,133 +68,139 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget customNavBar(AppModel value, AppModel setter) {
-  return Container(
-    clipBehavior: Clip.none,
-    height: 80,
-    decoration: BoxDecoration(
-      color: const Color(0xFFF8EADA),
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(15),
-        topRight: Radius.circular(15),
-      ),
-    ),
-    child: Stack(
+    return Container(
       clipBehavior: Clip.none,
-      alignment: Alignment.center,
-      children: [
-        // Bottom row with 5 navigation items
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(
-              icon: Icons.home,
-              label: 'Home',
-              index: 0,
-              currentIndex: value.currentPageIndex,
-              onTap: () => setter.setCurrentPageIndex(0),
-            ),
-            _buildNavItem(
-              icon: Icons.question_mark,
-              label: 'NusaSmart',
-              index: 1,
-              currentIndex: value.currentPageIndex,
-              onTap: () => setter.setCurrentPageIndex(1),
-            ),
-            // Empty space for center button
-            Container(width: 60),
-            _buildNavItem(
-              icon: Icons.people,
-              label: 'NusaFriend',
-              index: 3,
-              currentIndex: value.currentPageIndex,
-              onTap: () => setter.setCurrentPageIndex(3),
-            ),
-            _buildNavItem(
-              icon: Icons.map,
-              label: 'NusaMaps',
-              index: 4,
-              currentIndex: value.currentPageIndex,
-              onTap: () => setter.setCurrentPageIndex(4),
-            ),
-          ],
+      height: 80,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8EADA),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
         ),
-        // Center raised button
-        Positioned(
-          top: -15,
-          child: GestureDetector(
-            onTap: () => setter.setCurrentPageIndex(2),
-            child: Container(
-              height: 70,
-              width: 70,
-              decoration: BoxDecoration(
-                color: const Color(0xFF482B0C),
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 6,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.language,
-                    color: Colors.white,
-                    size: 28,
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    'NusaLingo',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
+      ),
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          // Bottom row with 5 navigation items
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildNavItem(
+                  iconPath: 'assets/home.png',
+                  label: 'Home',
+                  index: 0,
+                  currentIndex: value.currentPageIndex,
+                  onTap: () => setter.setCurrentPageIndex(0),
+                ),
+                _buildNavItem(
+                  iconPath: 'assets/nusasmart.png',
+                  label: 'NusaSmart',
+                  index: 1,
+                  currentIndex: value.currentPageIndex,
+                  onTap: () => setter.setCurrentPageIndex(1),
+                ),
+                // Empty space for center button
+                Container(width: 60),
+                _buildNavItem(
+                  iconPath: 'assets/nusafriend.png',
+                  label: 'NusaFriend',
+                  index: 3,
+                  currentIndex: value.currentPageIndex,
+                  onTap: () => setter.setCurrentPageIndex(3),
+                ),
+                _buildNavItem(
+                  iconPath: 'assets/nusamaps.png',
+                  label: 'NusaMaps',
+                  index: 4,
+                  currentIndex: value.currentPageIndex,
+                  onTap: () => setter.setCurrentPageIndex(4),
+                ),
+              ],
+            ),
+          ),
+          // Center raised button
+          Positioned(
+            top: -25,
+            left: 155,
+            child: GestureDetector(
+              onTap: () => setter.setCurrentPageIndex(2),
+              child: Container(
+                height: 70,
+                width: 70,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF482B0C),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 6,
+                      offset: Offset(0, 3),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/nusalingo.png',
+                      width: 28,
+                      height: 28,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      'NusaLingo',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
-Widget _buildNavItem({
-  required IconData icon,
-  required String label,
-  required int index,
-  required int currentIndex,
-  required VoidCallback onTap,
-}) {
-  final isSelected = index == currentIndex;
-  
-  return InkWell(
-    onTap: onTap,
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          color: isSelected ? const Color(0xFF482B0C) : Colors.grey,
-          size: 24,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
+  Widget _buildNavItem({
+    required String iconPath,
+    required String label,
+    required int index,
+    required int currentIndex,
+    required VoidCallback onTap,
+  }) {
+    final isSelected = index == currentIndex;
+
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            iconPath,
+            width: 24,
+            height: 24,
             color: isSelected ? const Color(0xFF482B0C) : Colors.grey,
-            fontSize: 12,
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
           ),
-        ),
-      ],
-    ),
-  );
-}
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? const Color(0xFF482B0C) : Colors.grey,
+              fontSize: 12,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
