@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nusastra/models/app_model.dart';
+import 'package:nusastra/services/api_service.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ShopPage extends StatelessWidget {
   const ShopPage({super.key});
@@ -116,53 +120,57 @@ class SpecialOfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        debugPrint(type);
-        
+    return Consumer<AppModel>(
+      builder: (context, value, child) {
+        return GestureDetector(
+          onTap: () async {
+            String snapURL = await ApiService.buy(value.token, type);
+            await launchUrl(Uri.parse(snapURL));
+          },
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  child: Icon(icon, size: 64, color: iconColor),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Color(0xFF482B0C),
+                          )),
+                      const SizedBox(height: 4),
+                      Text(description,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          )),
+                      const SizedBox(width: 12),
+                      Text(price,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: Color(0xFF482B0C),
+                          )),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
       },
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.shade300),
-        ),
-        child: Row(
-          children: [
-            SizedBox(
-              child: Icon(icon, size: 64, color: iconColor),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Color(0xFF482B0C),
-                      )),
-                  const SizedBox(height: 4),
-                  Text(description,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      )),
-                  const SizedBox(width: 12),
-                  Text(price,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: Color(0xFF482B0C),
-                      )),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -241,5 +249,11 @@ class CoinExchangeCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+Future<void> _launchUrl(_url) async {
+  if (!await launchUrl(_url)) {
+    throw Exception('Could not launch $_url');
   }
 }

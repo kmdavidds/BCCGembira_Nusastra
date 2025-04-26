@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:nusastra/models/app_model.dart';
+import 'package:nusastra/pages/result_page.dart';
 import 'package:nusastra/services/api_service.dart';
 import 'package:provider/provider.dart';
 
@@ -91,12 +92,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
       if (!mounted) return;
 
-      File file = File(image.path);
-      String body = await ApiService.uploadImage(setter.token, file);
+      // File file = File(image.path);
+      // String body = await ApiService.uploadImage(setter.token, file);
 
       await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => DisplayPictureScreen(imagePath: image.path),
+          builder: (context) => ResultPage(),
         ),
       );
     } catch (e) {

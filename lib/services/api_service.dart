@@ -84,8 +84,8 @@ class ApiService {
     return response.toString();
   }
 
-  static Future<void> buy(String token, String type) async {
-    final url = Uri.parse('$baseUrl/users/register');
+  static Future<String> buy(String token, String type) async {
+    final url = Uri.parse('$baseUrl/payments/create-payment');
     final response = await http.post(
       url,
       headers: {
@@ -98,11 +98,22 @@ class ApiService {
       }),
     );
 
+
     if (response.statusCode != 200) {
       throw HttpException('Failed to register: ${response.body}');
     }
 
-    return;
+    final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
+    final payments = responseBody['payments'] as Map<String, dynamic>?;
+    if (payments == null) {
+      throw HttpException('Payments field is missing in the response: ${response.body}');
+    }
+    final snapURL = payments['snap_url'] as String?;
+    if (snapURL == null) {
+      throw HttpException('snap_url field is missing in the payments object: ${response.body}');
+    }
+    debugPrint(snapURL);
+    return snapURL;
   }
 
   static Future<String> translate(String token, String content) async {
