@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/pages/start_page.dart';
-import 'package:nusastra/pages/test.dart';
 import 'package:provider/provider.dart';
 
 void main() {

@@ -1,6 +1,9 @@
 // filepath: /home/kmdavidds/Projects/flutter/nusastra/lib/pages/login_page.dart
 import 'package:flutter/material.dart';
+import 'package:nusastra/pages/home_page.dart';
 import 'package:nusastra/pages/register_page.dart';
+import 'package:nusastra/pages/translate_page.dart';
+import 'package:nusastra/services/api_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -81,43 +84,48 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      Row(
-                        children: [
-                        Checkbox(
-                          value: _rememberMe,
-                          onChanged: (value) {
-                          setState(() {
-                            _rememberMe = value ?? false;
-                          });
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: _rememberMe,
+                              onChanged: (value) {
+                                setState(() {
+                                  _rememberMe = value ?? false;
+                                });
+                              },
+                            ),
+                            const Text('Remember me'),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            // Navigate to forgot password page
                           },
+                          child: const Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
                         ),
-                        const Text('Remember me'),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                        // Navigate to forgot password page
-                        },
-                        child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
-                        ),
-                        ),
-                      ),
                       ],
                     ),
                     const SizedBox(height: 16),
                     Center(
                       child: FilledButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() == true) {
-                        debugPrint(_email);
-                        debugPrint(_password);
-                        }
-                      },
-                      child: const Text('Login'),
+                        onPressed: () {
+                          if (_formKey.currentState?.validate() == true) {
+                            debugPrint(_email);
+                            debugPrint(_password);
+                            ApiService.login(_email, _password);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()));
+                          }
+                        },
+                        child: const Text('Login'),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -127,8 +135,10 @@ class _LoginPageState extends State<LoginPage> {
                         const Text('Don\'t have an account? '),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterPage()));
                           },
                           child: const Text(
                             'Register',

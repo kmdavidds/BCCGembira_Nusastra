@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nusastra/pages/login_page.dart';
+import 'package:nusastra/services/api_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -136,6 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             debugPrint(_name);
                             debugPrint(_email);
                             debugPrint(_password);
+                            ApiService.register(_name, _email, _password);
                           } else if (!_agreeToTerms) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

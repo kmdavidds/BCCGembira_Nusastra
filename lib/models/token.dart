@@ -1,15 +1,21 @@
 class Token {
-  final String accessToken;
-  final String tokenType;
+  final String displayName;
+  final String userId;
+  final String token;
 
-  const Token({required this.accessToken, required this.tokenType});
+  const Token({required this.displayName, required this.userId, required this.token});
 
   factory Token.fromJson(Map<String, dynamic> json) {
     return switch (json) {
-      {'access_token': String accessToken, 'token_type': String tokenType} =>
+      {
+        'display_name': String displayName,
+        'userID': String userId,
+        'token': String token
+      } =>
         Token(
-          accessToken: accessToken,
-          tokenType: tokenType,
+          displayName: displayName,
+          userId: userId,
+          token: token,
         ),
       _ => throw const FormatException('Failed to load token.'),
     };
