@@ -8,9 +8,12 @@ class Token {
   factory Token.fromJson(Map<String, dynamic> json) {
     return switch (json) {
       {
-        'display_name': String displayName,
-        'userID': String userId,
-        'token': String token
+        'message': 'success',
+        'users': {
+          'userID': String userId,
+          'display_name': String displayName,
+          'token': String token
+        }
       } =>
         Token(
           displayName: displayName,

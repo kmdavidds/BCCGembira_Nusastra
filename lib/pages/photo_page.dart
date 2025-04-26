@@ -83,7 +83,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             String _base64String = base64.encode(_bytes);
 
             debugPrint(_base64String);
-            String body = await ApiService.saveAndUploadImage(file);
+            String body = await ApiService.uploadImage(file);
 
             debugPrint("AAAA SINIIII");
 

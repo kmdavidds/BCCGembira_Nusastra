@@ -64,49 +64,29 @@ class ApiService {
     return "Success";
   }
 
-  static Future<String> saveAndUploadImage(File file) async {
-    // Save the image to a local directory
-    final directory = await Directory.systemTemp.createTemp();
-    final localFile = File('${directory.path}/${file.path.split('/').last}');
-    await localFile.writeAsBytes(await file.readAsBytes());
-
-    // Upload the saved image using Dio
-    final dio = Dio();
-    String url = ('$baseUrl/chats/create-chat-ocr');
+  static Future<String> uploadImage(File file) async {
+    final dio = Dio(); // With default `Options`.
+    String url = ('$baseUrl/users/upload-image');
+    // String url = ('https://nixos.komangdavid.com/api/image');
     final formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(
-        localFile.path,
-        filename: localFile.path.split('/').last,
+        file.path,
+        filename: file.path.split('/').last,
       ),
     });
 
     dio.options.headers['Authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZjE0ZWE3YWMtMmMyMy00MzhkLWE4NzMtZGEyNTY2ZThlOTQyIiwidXNlcm5hbWUiOiJyb2JpbjEyMzQiLCJleHAiOjE3NDU2NzczNjh9.lsG0Wym9bhdZYjcsCqA7FXULma90VKqzGTERdd9piq0';
-    dio.options.headers['Content-Type'] = 'multipart/form-data';
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZjE0ZWE3YWMtMmMyMy00MzhkLWE4NzMtZGEyNTY2ZThlOTQyIiwidXNlcm5hbWUiOiJyb2JpbjEyMzQiLCJleHAiOjE3NDU2OTg0OTV9.43JB6W42Ok1J3ERrBVbVLS2iLpmGvPxMOkDWehIqRkM';
 
-    final response = await dio.post(url, data: formData);
+        dio.options.headers['Content-Type'] = 'multipart/form-data';
 
-    // Clean up the temporary file
-    await localFile.delete();
-
-    return response.toString();
-  }
-
-  static Future<String> uploadImage(String base64) async {
-    // Upload the saved image using Dio
-    final dio = Dio();
-    String url = ('$baseUrl/chats/create-chat-ocr');
-    final formData = FormData.fromMap({
-      'base64': base64
-    });
-
-    dio.options.headers['Authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZjE0ZWE3YWMtMmMyMy00MzhkLWE4NzMtZGEyNTY2ZThlOTQyIiwidXNlcm5hbWUiOiJyb2JpbjEyMzQiLCJleHAiOjE3NDU2NzczNjh9.lsG0Wym9bhdZYjcsCqA7FXULma90VKqzGTERdd9piq0';
-
-    final response = await dio.post(url, data: formData);
+    // base64 encode the bytes
+    debugPrint(file.path.split('/').last);
+    final response = await dio.patch(url, data: formData);
 
     return response.toString();
   }
+
 
 //   static Future<List<Classroom>> getClassrooms(String auth) async {
 //     final url = Uri.parse('$baseUrl/api/classrooms');
