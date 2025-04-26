@@ -1,0 +1,87 @@
+[
+    {
+      "name": "Bahasa Sunda",
+      "region": "Jawa Barat, Indonesia",
+      "speakers": 42000000,
+      "status": "Bahasa Daerah Utama",
+      "alphabet": "Latin, Aksara Sunda",
+      "classification": "Austronesia",
+      "position": {
+        "latitude": -6.9175,
+        "longitude": 107.6191
+      }
+    },
+    {
+      "name": "Bahasa Jawa",
+      "region": "Jawa Tengah, Indonesia",
+      "speakers": 68000000,
+      "status": "Bahasa Daerah Utama",
+      "alphabet": "Latin, Aksara Jawa",
+      "classification": "Austronesia",
+      "position": {
+        "latitude": -7.1500,
+        "longitude": 110.1400
+      }
+    },
+    {
+      "name": "Bahasa Bali",
+      "region": "Bali, Indonesia",
+      "speakers": 3300000,
+      "status": "Bahasa Daerah",
+      "alphabet": "Latin, Aksara Bali",
+      "classification": "Austronesia",
+      "position": {
+        "latitude": -8.3405,
+        "longitude": 115.0920
+      }
+    },
+    {
+      "name": "Bahasa Minangkabau",
+      "region": "Sumatera Barat, Indonesia",
+      "speakers": 5530000,
+      "status": "Bahasa Daerah",
+      "alphabet": "Latin",
+      "classification": "Austronesia",
+      "position": {
+        "latitude": -0.9397,
+        "longitude": 100.3724
+      }
+    },
+    {
+      "name": "Bahasa Banjar",
+      "region": "Kalimantan Selatan, Indonesia",
+      "speakers": 3500000,
+      "status": "Bahasa Daerah",
+      "alphabet": "Latin",
+      "classification": "Austronesia",
+      "position": {
+        "latitude": -3.3270,
+        "longitude": 114.5910
+      }
+    },
+    {
+      "name": "Bahasa Aceh",
+      "region": "Aceh, Indonesia",
+      "speakers": 3500000,
+      "status": "Bahasa Daerah",
+      "alphabet": "Latin, Jawi",
+      "classification": "Austronesia",
+      "position": {
+        "latitude": 5.5577,
+        "longitude": 95.3222
+      }
+    },
+    {
+      "name": "Bahasa Bugis",
+      "region": "Sulawesi Selatan, Indonesia",
+      "speakers": 5000000,
+      "status": "Bahasa Daerah",
+      "alphabet": "Latin, Lontara",
+      "classification": "Austronesia",
+      "position": {
+        "latitude": -4.0435,
+        "longitude": 119.6773
+      }
+    }
+  ]
+  

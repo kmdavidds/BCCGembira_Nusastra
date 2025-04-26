@@ -3,6 +3,7 @@ import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/pages/quiz_page.dart';
 import 'package:nusastra/pages/test.dart';
 import 'package:nusastra/pages/translate_page.dart';
+import 'package:nusastra/pages/maps_page.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -47,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             QuizPage(),
             TranslatePage(),
             TestPage(),
-            TestPage(),
+            MapsPage(), // Add MapsPage here
           ][value.currentPageIndex],
         );
       },
