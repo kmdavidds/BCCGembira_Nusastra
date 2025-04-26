@@ -6,7 +6,7 @@ import 'package:nusastra/models/token.dart';
 
 class ApiService {
   static const String baseUrl =
-      'https://aec2-202-93-245-215.ngrok-free.app/api/v1'; // Replace with your API endpoint
+      'https://b7e9-202-93-245-215.ngrok-free.app/api/v1'; // Replace with your API endpoint
 
   static String parseError(Map<String, dynamic> json) {
     return switch (json) {
@@ -33,13 +33,15 @@ class ApiService {
     );
 
     if (response.statusCode != 200) {
-      throw ErrorDescription(parseError(jsonDecode(response.body) as Map<String, dynamic>));
+      throw ErrorDescription(
+          parseError(jsonDecode(response.body) as Map<String, dynamic>));
     }
 
     return Token.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   }
 
-  static Future<String> register(String name, String email, String password) async {
+  static Future<String> register(
+      String name, String email, String password) async {
     final url = Uri.parse('$baseUrl/users/register');
     final response = await http.post(
       url,
@@ -59,6 +61,14 @@ class ApiService {
     }
 
     return "Success";
+  }
+
+  static Future<String> uploadImage(filename) async {
+    String url = "https://api.ocr.space/parse/image";
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+    request.files.add(await http.MultipartFile.fromPath('picture', filename));
+    var res = await request.send();
+    return res.statusCode.toString();
   }
 
 //   static Future<List<Classroom>> getClassrooms(String auth) async {

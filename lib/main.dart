@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/pages/photo_page.dart';
+import 'package:nusastra/pages/start_page.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: TakePictureScreen(camera: camera),
+      home: StartPage(camera: camera),
     );
   }
 }

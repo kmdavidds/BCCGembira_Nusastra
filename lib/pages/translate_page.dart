@@ -1,5 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/pages/photo_page.dart';
+import 'package:provider/provider.dart';
 
 class TranslatePage extends StatefulWidget {
   const TranslatePage({super.key});
@@ -149,6 +152,8 @@ class _TranslatePageState extends State<TranslatePage> {
   }
 
   Widget _buildCameraTab() {
-    return Center(child: Placeholder(),);
+    return Consumer<AppModel>(builder: (context, value, child) {
+      return Center(child: TakePictureScreen(camera: value.camera!));
+    });
   }
 }
