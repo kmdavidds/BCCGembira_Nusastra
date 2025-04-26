@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/pages/home_widget.dart';
 import 'package:nusastra/pages/quiz_page.dart';
-import 'package:nusastra/pages/test.dart';
 import 'package:nusastra/pages/translate_page.dart';
 import 'package:nusastra/pages/maps_page.dart';
 import 'package:provider/provider.dart';
+import 'package:nusastra/pages/friends_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
             HomeWidget(),
             QuizPage(),
             TranslatePage(),
-            TestPage(),
+            FriendsPage(),
             MapsPage(), // Add MapsPage here
           ][value.currentPageIndex],
         );
