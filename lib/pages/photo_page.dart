@@ -79,11 +79,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             if (!context.mounted) return;
 
             File file = File(image.path);
+            Uint8List _bytes = await file.readAsBytes();
+            String _base64String = base64.encode(_bytes);
 
-            String body = await ApiService.uploadImage(file);
+            debugPrint(_base64String);
+            String body = await ApiService.saveAndUploadImage(file);
 
             debugPrint("AAAA SINIIII");
-            debugPrint(body);
 
             // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(

@@ -85,7 +85,7 @@ class _TranslatePageState extends State<TranslatePage> {
               DropdownButton<String>(
                 hint: const Text('From'),
                 value: _sourceLanguage,
-                items: ['English', 'Spanish', 'French']
+                items: ['Indonesian', 'Balinese', 'Javanese']
                     .map((lang) => DropdownMenuItem(
                           value: lang,
                           child: Text(lang),
@@ -110,7 +110,7 @@ class _TranslatePageState extends State<TranslatePage> {
               DropdownButton<String>(
                 hint: const Text('To'),
                 value: _targetLanguage,
-                items: ['English', 'Spanish', 'French']
+                items: ['Indonesian', 'Balinese', 'Javanese']
                     .map((lang) => DropdownMenuItem(
                           value: lang,
                           child: Text(lang),

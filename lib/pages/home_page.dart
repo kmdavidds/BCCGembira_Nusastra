@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nusastra/models/app_model.dart';
+import 'package:nusastra/pages/quiz_page.dart';
 import 'package:nusastra/pages/test.dart';
 import 'package:nusastra/pages/translate_page.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           bottomNavigationBar: homeNavigation(value, setter),
           body: [
             isLoading ? _loadingWidget() : homeClassroom(value),
-            TestPage(),
+            QuizPage(),
             TranslatePage(),
             TestPage(),
             TestPage(),
