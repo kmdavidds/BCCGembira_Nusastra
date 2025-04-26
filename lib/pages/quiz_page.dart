@@ -8,7 +8,7 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  String selectedLanguage = 'English';
+  String selectedLanguage = 'Balinese';
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _QuizPageState extends State<QuizPage> {
             children: [
               DropdownButton<String>(
                 value: selectedLanguage,
-                items: <String>['English', 'Bahasa', 'Español']
+                items: <String>['Indonesian', 'Balinese', 'Javanese']
                     .map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,

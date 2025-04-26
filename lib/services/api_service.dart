@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:nusastra/models/token.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ApiService {
   static const String baseUrl =
@@ -64,24 +67,28 @@ class ApiService {
     return "Success";
   }
 
-  static Future<String> uploadImage(File file) async {
+  static Future<String> uploadImage() async {
     final dio = Dio(); // With default `Options`.
     String url = ('$baseUrl/users/upload-image');
-    // String url = ('https://nixos.komangdavid.com/api/image');
+    
+    // Load the image from assets
+    final ByteData byteData = await rootBundle.load('assets/bali.png');
+    final file = File('${(await getTemporaryDirectory()).path}/bali.png');
+    await file.writeAsBytes(byteData.buffer.asUint8List());
+
     final formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(
         file.path,
-        filename: file.path.split('/').last,
+        filename: "bali.png",
       ),
     });
 
     dio.options.headers['Authorization'] =
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZjE0ZWE3YWMtMmMyMy00MzhkLWE4NzMtZGEyNTY2ZThlOTQyIiwidXNlcm5hbWUiOiJyb2JpbjEyMzQiLCJleHAiOjE3NDU2OTg0OTV9.43JB6W42Ok1J3ERrBVbVLS2iLpmGvPxMOkDWehIqRkM';
 
-        dio.options.headers['Content-Type'] = 'multipart/form-data';
+    dio.options.headers['Content-Type'] = 'multipart/form-data';
 
-    // base64 encode the bytes
-    debugPrint(file.path.split('/').last);
+    // Send the request
     final response = await dio.patch(url, data: formData);
 
     return response.toString();
