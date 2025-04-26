@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/pages/login_page.dart';
 import 'package:nusastra/services/api_service.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -217,38 +219,62 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Center(
-                      child: FilledButton(
-                        style: ButtonStyle(
-                          minimumSize:
-                              WidgetStateProperty.all(const Size(334, 53)),
-                          backgroundColor:
-                              WidgetStateProperty.all(const Color(0xFF482B0C)),
-                          shape: WidgetStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
+                    Consumer<AppModel>(builder: (context, value, child) {
+                      var setter = context.read<AppModel>();
+                      var msgr = ScaffoldMessenger.of(context);
+                      return Center(
+                        child: FilledButton(
+                          style: ButtonStyle(
+                            minimumSize:
+                                WidgetStateProperty.all(const Size(334, 53)),
+                            backgroundColor: WidgetStateProperty.all(
+                                const Color(0xFF482B0C)),
+                            shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
                             ),
                           ),
+                          onPressed: () async {
+                            if (_formKey.currentState?.validate() == true &&
+                                _agreeToTerms) {
+                              try {
+                                debugPrint(_name);
+                                debugPrint(_email);
+                                debugPrint(_password);
+                                ApiService.register(_name, _email, _password);
+
+                                var token =
+                                    await ApiService.login(_email, _password);
+
+                                if (!context.mounted) return;
+
+                                setter.setToken(token.token);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
+                                );
+                              } catch (e) {
+                                if (!context.mounted) return;
+
+                                msgr.showSnackBar(SnackBar(
+                                  content: Text(e.toString()),
+                                ));
+                              }
+                            } else if (!_agreeToTerms) {
+                              msgr.showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Anda harus menyetujui syarat dan ketentuan'),
+                                ),
+                              );
+                            }
+                          },
+                          child: const Text("Daftar"),
                         ),
-                        onPressed: () {
-                          if (_formKey.currentState?.validate() == true &&
-                              _agreeToTerms) {
-                            debugPrint(_name);
-                            debugPrint(_email);
-                            debugPrint(_password);
-                            ApiService.register(_name, _email, _password);
-                          } else if (!_agreeToTerms) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                    'Anda harus menyetujui syarat dan ketentuan'),
-                              ),
-                            );
-                          }
-                        },
-                        child: const Text("Daftar"),
-                      ),
-                    ),
+                      );
+                    }),
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -265,7 +291,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             'Masuk',
                             style: TextStyle(
                               color: Color(0xFF905718),
-                              
                             ),
                           ),
                         ),
