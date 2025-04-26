@@ -15,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     super.initState();
@@ -124,14 +123,6 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                     ),
                     const SizedBox(height: 3),
-                    Text(
-                      'NusaLingo',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
                   ],
                 ),
               ),

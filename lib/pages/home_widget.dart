@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/styles/color_styles.dart';
+import 'package:provider/provider.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -44,13 +46,18 @@ class _HomeWidgetState extends State<HomeWidget> {
                           backgroundImage: AssetImage('assets/lisa.png'),
                           radius: 24,
                         ),
-                        title: Text(
-                          'Selamat datang, Indah!',
-                          style: TextStyle(
+                        title: Consumer<AppModel>(
+                          builder: (context, value, child) {
+                          return Text(
+                            'Selamat datang, ${value.displayName}!',
+                            style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                          ),
+                            ),
+                          );
+                          },
                         ),
+                 
                         subtitle: Text(
                           'Mau belajar bahasa apa hari ini?',
                           style: TextStyle(
