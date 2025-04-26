@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nusastra/pages/photo_page.dart';
 
 class TranslatePage extends StatefulWidget {
   const TranslatePage({super.key});
@@ -148,8 +149,6 @@ class _TranslatePageState extends State<TranslatePage> {
   }
 
   Widget _buildCameraTab() {
-    return const Center(
-      child: Text('Camera translation coming soon!'),
-    );
+    return Center(child: Placeholder(),);
   }
 }
