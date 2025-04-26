@@ -1,7 +1,7 @@
 // filepath: /home/kmdavidds/Projects/flutter/nusastra/lib/pages/login_page.dart
 import 'package:flutter/material.dart';
 import 'package:nusastra/models/app_model.dart';
-import 'package:nusastra/pages/first_page.dart';
+import 'package:nusastra/pages/home_page.dart';
 import 'package:nusastra/pages/register_page.dart';
 import 'package:nusastra/services/api_service.dart';
 import 'package:provider/provider.dart';
@@ -182,16 +182,16 @@ class _LoginPageState extends State<LoginPage> {
                               try {
                                 debugPrint(_email);
                                 debugPrint(_password);
-                                var token =
-                                    await ApiService.login(_email, _password);
+                                // var token =
+                                //   await ApiService.login(_email, _password);
 
                                 if (!context.mounted) return;
 
-                                setter.setToken(token.token);
+                                // setter.setToken(token.token);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => FirstPage()),
+                                      builder: (context) => HomePage()),
                                 );
                               } catch (e) {
                                 if (!context.mounted) return;

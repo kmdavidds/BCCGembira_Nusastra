@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         trailing: Image.asset(
-                          'assets/shop.png',
+                          'assets/shops.png',
                           width: 36,
                           height: 36,
                         ),

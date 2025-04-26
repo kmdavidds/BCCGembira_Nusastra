@@ -1,7 +1,5 @@
 // A screen that allows users to take a picture using a given camera.
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +45,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Take a picture')),
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
@@ -79,13 +76,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             if (!context.mounted) return;
 
             File file = File(image.path);
-            Uint8List _bytes = await file.readAsBytes();
-            String _base64String = base64.encode(_bytes);
 
-            debugPrint(_base64String);
             String body = await ApiService.uploadImage(file);
-
-            debugPrint("AAAA SINIIII");
 
             // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
@@ -99,7 +91,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             );
           } catch (e) {
             // If an error occurs, log the error to the console.
-            print(e);
+            debugPrint(e.toString());
           }
         },
         child: const Icon(Icons.camera_alt),
