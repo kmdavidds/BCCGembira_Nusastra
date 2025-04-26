@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nusastra/pages/shop_page.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -31,7 +32,8 @@ class _QuizPageState extends State<QuizPage> {
                 ],
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ShopPage()));},
                 child: Image.asset('assets/shop.png', height: 24),
               ),
             ],
@@ -196,7 +198,7 @@ class _QuizPageState extends State<QuizPage> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
+                    horizontal: 36,
                     vertical: 10,
                   ),
                 ),
