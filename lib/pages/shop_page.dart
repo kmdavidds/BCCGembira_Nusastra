@@ -39,6 +39,7 @@ class ShopPage extends StatelessWidget {
               title: 'Streak Freeze',
               description:
                   'Melindungi streak kamu apabila terlewat mengerjakan kuis dalam satu hari',
+              type: "freeze",
               price: 'Rp10.000',
             ),
             const SizedBox(height: 12),
@@ -48,6 +49,7 @@ class ShopPage extends StatelessWidget {
               title: 'Konten Premium (1 bulan)',
               description:
                   'Akses berbagai konten premium dengan bebas selama 1 bulan',
+              type: "premium",
               price: 'Rp15.000',
             ),
             const SizedBox(height: 24),
@@ -100,6 +102,7 @@ class SpecialOfferCard extends StatelessWidget {
   final String title;
   final String description;
   final String price;
+  final String type;
 
   const SpecialOfferCard({
     super.key,
@@ -108,50 +111,57 @@ class SpecialOfferCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.price,
+    required this.type,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            child: Icon(icon, size: 64, color: iconColor),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Color(0xFF482B0C),
-                    )),
-                const SizedBox(height: 4),
-                Text(description,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey,
-                    )),
-                const SizedBox(width: 12),
-                Text(price,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: Color(0xFF482B0C),
-                    )),
-              ],
+    return GestureDetector(
+      onTap: () {
+        debugPrint(type);
+        
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey.shade300),
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              child: Icon(icon, size: 64, color: iconColor),
             ),
-          ),
-        ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Color(0xFF482B0C),
+                      )),
+                  const SizedBox(height: 4),
+                  Text(description,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      )),
+                  const SizedBox(width: 12),
+                  Text(price,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Color(0xFF482B0C),
+                      )),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

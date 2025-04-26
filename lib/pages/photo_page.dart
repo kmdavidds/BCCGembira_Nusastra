@@ -1,7 +1,5 @@
 // A screen that allows users to take a picture using a given camera.
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -78,13 +76,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             if (!context.mounted) return;
 
             File file = File(image.path);
-            Uint8List _bytes = await file.readAsBytes();
-            String _base64String = base64.encode(_bytes);
 
-            debugPrint(_base64String);
-            String body = await ApiService.uploadImage();
-
-            debugPrint("AAAA SINIIII");
+            String body = await ApiService.uploadImage(file);
 
             // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
