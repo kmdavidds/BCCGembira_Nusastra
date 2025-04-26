@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nusastra/pages/register_page.dart';
 import 'package:nusastra/pages/test.dart';
 
 class StartPage extends StatelessWidget {
@@ -21,7 +22,7 @@ class StartPage extends StatelessWidget {
             FilledButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TestPage()));
+                      MaterialPageRoute(builder: (context) => RegisterPage()));
                 },
                 child: Text("Daftar")),
             Row(
