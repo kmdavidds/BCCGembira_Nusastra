@@ -24,34 +24,29 @@ class _QuestionPageState extends State<QuestionPage> {
       'correctAnswer': 0
     },
     {
-      'question': '"Mangan Nggih"',
-      'options': ['Sudah makan?', 'Mari makan', 'Ayo minum', 'Enak sekali'],
-      'correctAnswer': 1
-    },
-    {
-      'question': '"Dolanan Nang Ngendi?"',
-      'options': [
-        'Mau ke mana?',
-        'Main di mana?',
-        'Dari mana?',
-        'Tinggal di mana?'
-      ],
-      'correctAnswer': 1
-    },
-    {
       'question': '"Punapi Gatra?"',
       'options': ['Apa kabar?', 'Bagaimana?', 'Siapa nama?', 'Berapa usia?'],
       'correctAnswer': 0
     },
     {
-      'question': '"Sugeng Enjang"',
+      'question': '"Tiang Nenten Ngerti"',
       'options': [
-        'Selamat pagi',
-        'Selamat siang',
-        'Selamat malam',
-        'Selamat tidur'
+      'Saya tidak tahu',
+      'Saya tidak mengerti',
+      'Saya tidak mau',
+      'Saya tidak bisa'
       ],
+      'correctAnswer': 1
+    },
+    {
+      'question': '"Suksma"',
+      'options': ['Terima kasih', 'Sama-sama', 'Selamat tinggal', 'Maaf'],
       'correctAnswer': 0
+    },
+    {
+      'question': '"Jaan Gati"',
+      'options': ['Sudah makan?', 'Mari makan', 'Ayo minum', 'Enak sekali'],
+      'correctAnswer': 3
     },
   ];
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nusastra/pages/home_page.dart';
 import 'package:nusastra/pages/quiz_page.dart';
 import 'package:nusastra/styles/color_styles.dart';
 
@@ -106,7 +107,7 @@ class ScorePage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const QuizPage()),
+                  MaterialPageRoute(builder: (context) => const HomePage()),
                 );
               },
               style: ElevatedButton.styleFrom(
