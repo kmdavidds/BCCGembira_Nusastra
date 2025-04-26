@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:nusastra/models/token.dart';
@@ -63,12 +64,24 @@ class ApiService {
     return "Success";
   }
 
-  static Future<String> uploadImage(filename) async {
+  static Future<String> uploadImage(File file) async {
+    final dio = Dio(); // With default `Options`.
     String url = "https://api.ocr.space/parse/image";
-    var request = http.MultipartRequest('POST', Uri.parse(url));
-    request.files.add(await http.MultipartFile.fromPath('picture', filename));
-    var res = await request.send();
-    return res.statusCode.toString();
+    final formData = FormData.fromMap({
+      'image': await MultipartFile.fromFile(
+        file.path,
+        filename: file.path.split('/').last,
+      ),
+      "apikey": "K89386539488957",
+      "filetype": "JPG"
+    });
+
+// base64 encode the bytes
+    String base64String = base64.encode(await file.readAsBytes());
+    debugPrint(file.path.split('/').last);
+    final response = await dio.post(url, data: formData);
+
+    return response.toString();
   }
 
 //   static Future<List<Classroom>> getClassrooms(String auth) async {

@@ -133,18 +133,32 @@ class _TranslatePageState extends State<TranslatePage> {
             maxLines: null,
           ),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              // Add your translation logic here
-              final text = _textController.text;
-              final from = _sourceLanguage;
-              final to = _targetLanguage;
-              if (text.isNotEmpty && from != null && to != null) {
-                // Perform translation
-                print('Translating "$text" from $from to $to');
-              }
-            },
-            child: const Text('Translate'),
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.mic),
+                onPressed: () {
+                  // Add your voice input logic here
+                  print('Voice input activated');
+                },
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Add your translation logic here
+                    final text = _textController.text;
+                    final from = _sourceLanguage;
+                    final to = _targetLanguage;
+                    if (text.isNotEmpty && from != null && to != null) {
+                      // Perform translation
+                      print('Translating "$text" from $from to $to');
+                    }
+                  },
+                  child: const Text('Translate'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
