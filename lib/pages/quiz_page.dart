@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nusastra/pages/question_page.dart';
 import 'package:nusastra/pages/shop_page.dart';
 
 class QuizPage extends StatefulWidget {
@@ -32,9 +33,15 @@ class _QuizPageState extends State<QuizPage> {
                 ],
               ),
               GestureDetector(
-                onTap: () {Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ShopPage()));},
-                child: Image.asset('assets/shop.png', height: 24),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ShopPage()));
+                },
+                child: Image.asset(
+                  'assets/shops.png',
+                  height: 24,
+                  width: 24,
+                ),
               ),
             ],
           ),
@@ -62,7 +69,7 @@ class _QuizPageState extends State<QuizPage> {
                           borderSide: BorderSide.none,
                         ),
                       ),
-                      items: <String>['Indonesian', 'Balinese', 'Javanese']
+                      items: <String>['Sundanese', 'Balinese', 'Javanese']
                           .map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -118,7 +125,7 @@ class _QuizPageState extends State<QuizPage> {
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w700,
             fontSize: 16,
-            height: 1.2, // 120% line-height
+            height: 1.2,
             color: Color(0xFF482B0C),
           ),
         ),
@@ -168,11 +175,7 @@ class _QuizPageState extends State<QuizPage> {
                         shape: BoxShape.circle,
                         color: Color(0xFFF9C23C),
                       ),
-                      child: const Icon(
-                        Icons.monetization_on,
-                        size: 16,
-                        color: Color(0xFFD3883E),
-                      ),
+                      child: Image.asset('assets/coin.png'),
                     ),
                     const SizedBox(width: 8),
                     const Text(
@@ -191,7 +194,13 @@ class _QuizPageState extends State<QuizPage> {
             Align(
               alignment: Alignment.centerRight,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const QuestionPage()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFD98324),
                   shape: RoundedRectangleBorder(
@@ -230,22 +239,30 @@ class MonetizationRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: const [
+        children: [
           Row(
             children: [
-              Icon(Icons.monetization_on, color: Colors.amber),
-              SizedBox(width: 4),
-              Text('66', style: TextStyle(color: Colors.white)),
+              Image.asset(
+                'assets/coin.png',
+                height: 24,
+                width: 24,
+              ),
+              const SizedBox(width: 4),
+              const Text('66', style: TextStyle(color: Colors.white)),
             ],
           ),
           Row(
             children: [
-              Icon(Icons.local_fire_department, color: Colors.redAccent),
-              SizedBox(width: 4),
-              Text('16', style: TextStyle(color: Colors.white)),
+              Image.asset(
+                'assets/streak.png',
+                height: 24,
+                width: 24,
+              ),
+              const SizedBox(width: 4),
+              const Text('16', style: TextStyle(color: Colors.white)),
             ],
           ),
-          Row(
+          const Row(
             children: [
               Icon(Icons.ac_unit, color: Colors.lightBlueAccent),
               SizedBox(width: 4),
