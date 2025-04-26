@@ -100,8 +100,8 @@ class _HomePageState extends State<HomePage> {
           label: 'NusaSmart',
         ),
         NavigationDestination(
-          selectedIcon: Icon(Icons.speaker, color: Colors.white),
-          icon: Icon(Icons.speaker),
+          selectedIcon: Icon(Icons.language, color: Colors.white),
+          icon: Icon(Icons.language),
           label: 'NusaLingo',
         ),
         NavigationDestination(
