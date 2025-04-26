@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/pages/login_page.dart';
 import 'package:nusastra/services/api_service.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -32,87 +34,175 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     Center(
                       child: Image.asset(
-                        'assets/logo.png', // Replace with your image asset
+                        'assets/logolong.png', // Replace with your image asset
                         height: 100,
                       ),
                     ),
                     const SizedBox(height: 16),
                     const Center(
                       child: Text(
-                        'Silakan daftar akun dengan memasukkan email dan password!',
+                        "Silakan daftar akun dengan memasukkan email dan kata sandi!",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          height: 1.2,
+                          letterSpacing: 0,
+                          color: Color(0xFFAFACA9),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                     const SizedBox(height: 16),
-                    const Text('Display Name'),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Enter your display name',
+                    const Text(
+                      'Nama Tampilan',
+                      style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 14,
+                        color: Color(0xFF000000),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your display name';
-                        }
-                        setState(() {
-                          _name = value;
-                        });
-                        return null;
-                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2, horizontal: 15),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        border: Border.all(color: Color(0xFFE2E1E5)),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Nama Tampilan',
+                          hintStyle: TextStyle(color: Color(0xFFD2D2D2)),
+                          border: InputBorder.none,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Silakan masukkan nama tampilan Anda';
+                          }
+                          setState(() {
+                            _name = value;
+                          });
+                          return null;
+                        },
+                      ),
                     ),
                     const SizedBox(height: 16),
-                    const Text('Email'),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Enter your email',
+                    const Text(
+                      'Email',
+                      style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 14,
+                        color: Color(0xFF000000),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        }
-                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                          return 'Please enter a valid email';
-                        }
-                        setState(() {
-                          _email = value;
-                        });
-                        return null;
-                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2, horizontal: 15),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        border: Border.all(color: Color(0xFFE2E1E5)),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Email',
+                          hintStyle: TextStyle(color: Color(0xFFD2D2D2)),
+                          border: InputBorder.none,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Silakan masukkan email Anda';
+                          }
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return 'Silakan masukkan email yang valid';
+                          }
+                          setState(() {
+                            _email = value;
+                          });
+                          return null;
+                        },
+                      ),
                     ),
                     const SizedBox(height: 16),
-                    const Text('Password'),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter your password',
+                    const Text(
+                      'Kata Sandi',
+                      style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 14,
+                        color: Color(0xFF000000),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters long';
-                        }
-                        setState(() {
-                          _password = value;
-                        });
-                        return null;
-                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2, horizontal: 15),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        border: Border.all(color: Color(0xFFE2E1E5)),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Kata Sandi',
+                          hintStyle: TextStyle(color: Color(0xFFD2D2D2)),
+                          border: InputBorder.none,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Silakan masukkan kata sandi Anda';
+                          }
+                          if (value.length < 6) {
+                            return 'Kata sandi harus memiliki setidaknya 6 karakter';
+                          }
+                          setState(() {
+                            _password = value;
+                          });
+                          return null;
+                        },
+                      ),
                     ),
                     const SizedBox(height: 16),
-                    const Text('Confirm Password'),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Confirm your password',
+                    const Text(
+                      'Konfirmasi Kata Sandi',
+                      style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 14,
+                        color: Color(0xFF000000),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please confirm your password';
-                        }
-                        if (value != _password) {
-                          return 'Passwords do not match';
-                        }
-                        return null;
-                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2, horizontal: 15),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF),
+                        border: Border.all(color: Color(0xFFE2E1E5)),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Konfirmasi Kata Sandi',
+                          hintStyle: TextStyle(color: Color(0xFFD2D2D2)),
+                          border: InputBorder.none,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Silakan konfirmasi kata sandi Anda';
+                          }
+                          if (value != _password) {
+                            return 'Kata sandi tidak cocok';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -125,36 +215,71 @@ class _RegisterPageState extends State<RegisterPage> {
                             });
                           },
                         ),
-                        const Text('I agree to the terms and conditions'),
+                        const Text('Saya setuju dengan syarat dan ketentuan'),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Center(
-                      child: FilledButton(
-                        onPressed: () {
-                          if (_formKey.currentState?.validate() == true &&
-                              _agreeToTerms) {
-                            debugPrint(_name);
-                            debugPrint(_email);
-                            debugPrint(_password);
-                            ApiService.register(_name, _email, _password);
-                          } else if (!_agreeToTerms) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                    'You must agree to the terms and conditions'),
+                    Consumer<AppModel>(builder: (context, value, child) {
+                      var setter = context.read<AppModel>();
+                      var msgr = ScaffoldMessenger.of(context);
+                      return Center(
+                        child: FilledButton(
+                          style: ButtonStyle(
+                            minimumSize:
+                                WidgetStateProperty.all(const Size(334, 53)),
+                            backgroundColor: WidgetStateProperty.all(
+                                const Color(0xFF482B0C)),
+                            shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
                               ),
-                            );
-                          }
-                        },
-                        child: const Text('Register'),
-                      ),
-                    ),
+                            ),
+                          ),
+                          onPressed: () async {
+                            if (_formKey.currentState?.validate() == true &&
+                                _agreeToTerms) {
+                              try {
+                                debugPrint(_name);
+                                debugPrint(_email);
+                                debugPrint(_password);
+                                ApiService.register(_name, _email, _password);
+
+                                var token =
+                                    await ApiService.login(_email, _password);
+
+                                if (!context.mounted) return;
+
+                                setter.setToken(token.token);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
+                                );
+                              } catch (e) {
+                                if (!context.mounted) return;
+
+                                msgr.showSnackBar(SnackBar(
+                                  content: Text(e.toString()),
+                                ));
+                              }
+                            } else if (!_agreeToTerms) {
+                              msgr.showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Anda harus menyetujui syarat dan ketentuan'),
+                                ),
+                              );
+                            }
+                          },
+                          child: const Text("Daftar"),
+                        ),
+                      );
+                    }),
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Already have an account? '),
+                        const Text('Sudah punya akun? '),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -163,10 +288,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                     builder: (context) => LoginPage()));
                           },
                           child: const Text(
-                            'Login',
+                            'Masuk',
                             style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
+                              color: Color(0xFF905718),
                             ),
                           ),
                         ),
