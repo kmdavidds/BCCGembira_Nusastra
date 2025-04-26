@@ -10,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 
 class ApiService {
   static const String baseUrl =
-      'https://2699-202-93-245-215.ngrok-free.app/api/v1'; // Replace with your API endpoint
+      'https://87be-202-93-245-215.ngrok-free.app/api/v1'; // Replace with your API endpoint
 
   static String parseError(Map<String, dynamic> json) {
     return switch (json) {

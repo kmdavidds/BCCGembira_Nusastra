@@ -19,21 +19,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadClassrooms();
-  }
-
-  Future<void> _loadClassrooms() async {
-    // try {
-    //   var appModel = context.read<AppModel>();
-    //   var classrooms = await ApiService.getClassrooms(appModel.token);
-    //   appModel.setClassrooms(classrooms);
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // } finally {
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    // }a
   }
 
   @override
@@ -42,7 +27,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context, value, child) {
         var setter = context.read<AppModel>();
         return Scaffold(
-          bottomNavigationBar: homeNavigation(value, setter),
+          bottomNavigationBar: customNavBar(value, setter),
           body: [
             isLoading ? _loadingWidget() : homeClassroom(value),
             QuizPage(),
@@ -82,41 +67,134 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  NavigationBar homeNavigation(AppModel value, AppModel setter) {
-    return NavigationBar(
-      backgroundColor: const Color(0xFFF8EADA),
-      onDestinationSelected: (int index) {
-        setter.setCurrentPageIndex(index);
-      },
-      indicatorColor: Color(0xFF482B0C),
-      selectedIndex: value.currentPageIndex,
-      destinations: const <Widget>[
-        NavigationDestination(
-          selectedIcon: Icon(Icons.home, color: Colors.white),
-          icon: Icon(Icons.home),
-          label: 'Home',
+  Widget customNavBar(AppModel value, AppModel setter) {
+  return Container(
+    clipBehavior: Clip.none,
+    height: 80,
+    decoration: BoxDecoration(
+      color: const Color(0xFFF8EADA),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      ),
+    ),
+    child: Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
+      children: [
+        // Bottom row with 5 navigation items
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildNavItem(
+              icon: Icons.home,
+              label: 'Home',
+              index: 0,
+              currentIndex: value.currentPageIndex,
+              onTap: () => setter.setCurrentPageIndex(0),
+            ),
+            _buildNavItem(
+              icon: Icons.question_mark,
+              label: 'NusaSmart',
+              index: 1,
+              currentIndex: value.currentPageIndex,
+              onTap: () => setter.setCurrentPageIndex(1),
+            ),
+            // Empty space for center button
+            Container(width: 60),
+            _buildNavItem(
+              icon: Icons.people,
+              label: 'NusaFriend',
+              index: 3,
+              currentIndex: value.currentPageIndex,
+              onTap: () => setter.setCurrentPageIndex(3),
+            ),
+            _buildNavItem(
+              icon: Icons.map,
+              label: 'NusaMaps',
+              index: 4,
+              currentIndex: value.currentPageIndex,
+              onTap: () => setter.setCurrentPageIndex(4),
+            ),
+          ],
         ),
-        NavigationDestination(
-          selectedIcon: Icon(Icons.question_mark, color: Colors.white),
-          icon: Icon(Icons.question_mark),
-          label: 'NusaSmart',
-        ),
-        NavigationDestination(
-          selectedIcon: Icon(Icons.language, color: Colors.white),
-          icon: Icon(Icons.language),
-          label: 'NusaLingo',
-        ),
-        NavigationDestination(
-          selectedIcon: Icon(Icons.people, color: Colors.white),
-          icon: Icon(Icons.people),
-          label: 'NusaFriend',
-        ),
-        NavigationDestination(
-          selectedIcon: Icon(Icons.map, color: Colors.white),
-          icon: Icon(Icons.map),
-          label: 'NusaMaps',
+        // Center raised button
+        Positioned(
+          top: -15,
+          child: GestureDetector(
+            onTap: () => setter.setCurrentPageIndex(2),
+            child: Container(
+              height: 70,
+              width: 70,
+              decoration: BoxDecoration(
+                color: const Color(0xFF482B0C),
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 6,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.language,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    'NusaLingo',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ],
-    );
-  }
+    ),
+  );
+}
+
+Widget _buildNavItem({
+  required IconData icon,
+  required String label,
+  required int index,
+  required int currentIndex,
+  required VoidCallback onTap,
+}) {
+  final isSelected = index == currentIndex;
+  
+  return InkWell(
+    onTap: onTap,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          color: isSelected ? const Color(0xFF482B0C) : Colors.grey,
+          size: 24,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? const Color(0xFF482B0C) : Colors.grey,
+            fontSize: 12,
+            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+          ),
+        ),
+      ],
+    ),
+  );
+}
 }
