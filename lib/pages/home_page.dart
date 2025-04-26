@@ -122,9 +122,12 @@ class _HomePageState extends State<HomePage> {
                                   const SizedBox(height: 8),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Icon(Icons.monetization_on,
-                                          color: Colors.amber),
+                                    children: [
+                                      Image.asset(
+                                        'assets/coin.png',
+                                        width: 24,
+                                        height: 24,
+                                      ),
                                       SizedBox(width: 4),
                                       Text('66 Zp'),
                                     ],
