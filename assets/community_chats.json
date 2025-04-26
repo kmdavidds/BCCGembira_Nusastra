@@ -1,0 +1,138 @@
+[
+    {
+      "name": "Persekutuan Wong Jowo",
+      "avatar": "assets/avatar.png",
+      "memberCount": "2000 pengikut",
+      "messages": [
+        {
+          "senderName": "Daniil",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Sugeng enjing sedoyo",
+          "time": "2025-04-27T10:05:00.000Z"
+        },
+        {
+          "senderName": "Daniil",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Pripun kabare niki?",
+          "time": "2025-04-27T10:05:30.000Z"
+        },
+        {
+          "senderName": "Maria",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Kulo nembe nonton wayang ing alun-alun",
+          "time": "2025-04-27T10:05:45.000Z",
+          "replyTo": "Daniil",
+          "replyText": "Pripun kabare niki?",
+          "likes": 1
+        },
+        {
+          "senderName": "Nik",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Wonten ing pundi nggih?",
+          "time": "2025-04-27T10:06:15.000Z"
+        },
+        {
+          "senderName": "Daniil",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Wah, kulo kepengen ndherek",
+          "time": "2025-04-27T10:08:30.000Z"
+        },
+        {
+          "senderName": "Eugene",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Wayange apik tenan yo",
+          "time": "2025-04-27T10:06:45.000Z"
+        },
+        {
+          "senderName": "Maria",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Inggih, kaliyan kanca-kanca. Mangke dalu tasih wonten malih",
+          "time": "2025-04-27T10:07:15.000Z"
+        }
+      ]
+    },
+    {
+      "name": "Pencari Poin",
+      "avatar": "assets/avatar.png",
+      "memberCount": "1244 pengikut",
+      "messages": [
+        {
+          "senderName": "Budi",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Ada yang tau cara dapetin poin cepet?",
+          "time": "2025-04-27T09:30:00.000Z"
+        },
+        {
+          "senderName": "Ani",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Coba selesaikan quiz harian, lumayan 20 poin",
+          "time": "2025-04-27T09:32:00.000Z"
+        },
+        {
+          "senderName": "Deni",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Kalo buat streak 7 hari berturut2 dapet 100 poin bonus",
+          "time": "2025-04-27T09:35:00.000Z",
+          "likes": 3
+        }
+      ]
+    },
+    {
+      "name": "Sahabat Sunda",
+      "avatar": "assets/avatar.png",
+      "memberCount": "1755 pengikut",
+      "messages": [
+        {
+          "senderName": "Asep",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Wilujeng enjing sadayana!",
+          "time": "2025-04-27T07:30:00.000Z"
+        },
+        {
+          "senderName": "Euis",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Wilujeng enjing kang, kumaha damang?",
+          "time": "2025-04-27T07:32:00.000Z"
+        },
+        {
+          "senderName": "Asep",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Alhamdulillah damang, ayeuna keur diajar basa Sunda",
+          "time": "2025-04-27T07:35:00.000Z"
+        },
+        {
+          "senderName": "Ujang",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Sae pisan éta! Basa Sunda mah éndah pisan",
+          "time": "2025-04-27T07:40:00.000Z",
+          "likes": 2
+        }
+      ]
+    },
+    {
+      "name": "Belajar Bahasa Bali",
+      "avatar": "assets/avatar.png",
+      "memberCount": "1322 pengikut",
+      "messages": [
+        {
+          "senderName": "Made",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Om Swastiastu!",
+          "time": "2025-04-27T08:30:00.000Z"
+        },
+        {
+          "senderName": "Wayan",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Om Swastiastu! Punapi gatra?",
+          "time": "2025-04-27T08:32:00.000Z"
+        },
+        {
+          "senderName": "Ketut",
+          "senderAvatar": "assets/avatar.png",
+          "text": "Becik-becik! Tiang sedeng melajah basa Bali",
+          "time": "2025-04-27T08:35:00.000Z",
+          "likes": 1
+        }
+      ]
+    }
+  ]

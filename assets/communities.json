@@ -1,0 +1,42 @@
+[
+    {
+      "name": "Persekutuan Wong Jowo",
+      "avatar": "assets/avatar.png",
+      "joined": true
+    },
+    {
+      "name": "Pencari Poin",
+      "avatar": "assets/avatar.png",
+      "joined": false
+    },
+    {
+      "name": "Sahabat Sunda",
+      "avatar": "assets/avatar.png",
+      "joined": false
+    },
+    {
+      "name": "Komunitas Bahasa Batak",
+      "avatar": "assets/avatar.png",
+      "joined": false
+    },
+    {
+      "name": "Belajar Bahasa Bali",
+      "avatar": "assets/avatar.png",
+      "joined": false
+    },
+    {
+      "name": "Komunitas Bahasa Bugis",
+      "avatar": "assets/avatar.png",
+      "joined": true
+    },
+    {
+      "name": "Pelestari Bahasa Minang",
+      "avatar": "assets/avatar.png",
+      "joined": false
+    },
+    {
+      "name": "Pemerhati Bahasa Lampung",
+      "avatar": "assets/avatar.png",
+      "joined": false
+    }
+  ]
