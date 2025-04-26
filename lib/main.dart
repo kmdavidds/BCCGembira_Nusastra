@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nusastra/models/app_model.dart';
+import 'package:nusastra/pages/start_page.dart';
 import 'package:nusastra/pages/test.dart';
 import 'package:provider/provider.dart';
 
@@ -23,11 +24,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Deep Gaze',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF443627)),
         useMaterial3: true,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: const TestPage(),
+      home: const StartPage(),
     );
   }
 }
