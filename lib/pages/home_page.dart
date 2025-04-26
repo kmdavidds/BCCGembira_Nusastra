@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                                         width: 24,
                                         height: 24,
                                       ),
-                                      SizedBox(width: 8),
+                                      SizedBox(width: 4),
                                       Text('200'),
                                     ],
                                   ),
@@ -123,14 +123,9 @@ class _HomePageState extends State<HomePage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
-                                      Image(
-                                        image: AssetImage(
-                                          'assets/coin.png',
-                                        ),
-                                        width: 24,
-                                        height: 24,
-                                      ),
-                                      SizedBox(width: 8),
+                                      Icon(Icons.monetization_on,
+                                          color: Colors.amber),
+                                      SizedBox(width: 4),
                                       Text('66 Zp'),
                                     ],
                                   ),
@@ -180,12 +175,20 @@ class _HomePageState extends State<HomePage> {
               const _NewsCardList(),
               const SizedBox(height: 16),
               const _SectionTitle(title: 'Rekomendasi Kuis'),
-              const _QuizCard(title: 'Makan Makanan Tradisional'),
-              const _QuizCard(title: 'Bertemu Teman Lama'),
+              _QuizCard(
+                title: 'Makan Makanan Tradisional (Bali)',
+                points: '20 Zp',
+                onPressed: () {},
+              ),
+              _QuizCard(
+                title: 'Bertemu Teman Lama (Bali)',
+                points: '20 Zp',
+                onPressed: () {},
+              ),
               const SizedBox(height: 16),
               const _SectionTitle(title: 'Video Edukatif'),
               const _VideoList(),
-              const SizedBox(height: 48),
+              const SizedBox(height: 64),
             ],
           ),
         ),
@@ -251,7 +254,7 @@ class _NewsCardList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 130, // Fixed height untuk ListView
+      height: 130,
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
@@ -276,37 +279,12 @@ class _NewsCardList extends StatelessWidget {
   }
 }
 
-class _QuizCard extends StatelessWidget {
-  final String title;
-
-  const _QuizCard({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 2,
-        child: ListTile(
-          title: Text(title),
-          subtitle: const Text('20 poin'),
-          trailing: ElevatedButton(
-            onPressed: () {},
-            child: const Text('Mulai'),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _VideoList extends StatelessWidget {
   const _VideoList();
 
   @override
   Widget build(BuildContext context) {
-    final videoAssets = [
+    final videos = [
       'assets/balivid.png',
       'assets/pentingvid.png',
     ];
@@ -316,22 +294,156 @@ class _VideoList extends StatelessWidget {
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
-        itemCount: videoAssets.length,
+        itemCount: videos.length,
         itemBuilder: (context, index) {
           return Container(
             margin: const EdgeInsets.only(right: 12),
-            child: IntrinsicWidth(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  videoAssets[index],
-                  height: 130,
-                  fit: BoxFit.cover,
+            child: Stack(
+              children: [
+                IntrinsicWidth(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      videos[index],
+                      height: 130,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
+                Positioned.fill(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: () {
+                        // Aksi ketika video diklik
+                        print('Video ${videos[index]} dipilih');
+                      },
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 8,
+                  right: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.6),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.play_arrow,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _QuizCard extends StatelessWidget {
+  final String title;
+  final String points;
+  final VoidCallback? onPressed;
+
+  const _QuizCard({
+    required this.title,
+    this.points = '20 Zp',
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Container(
+        width: MediaQuery.of(context).size.width - 32, // Ensure fixed width
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFFBFE),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: ColorStyles.ochre1000,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Container(
+                  width: 24,
+                  height: 24,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFF9C23C),
+                  ),
+                  child: Image.asset(
+                    'assets/coin.png',
+                    width: 16,
+                    height: 16,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  points,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    color: const Color(0xFFA7A7A7),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Align(
+              alignment: Alignment.centerRight,
+              child: SizedBox(
+                width: 120,
+                child: ElevatedButton(
+                  onPressed: onPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorStyles.ochre600,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                  ),
+                  child: Text(
+                    'Mulai',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
