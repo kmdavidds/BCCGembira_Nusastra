@@ -44,7 +44,7 @@ class ShopPage extends StatelessWidget {
               description:
                   'Melindungi streak kamu apabila terlewat mengerjakan kuis dalam satu hari',
               type: "freeze",
-              price: 'Rp10.000',
+              price: 'Rp15.000',
             ),
             const SizedBox(height: 12),
             SpecialOfferCard(
@@ -54,7 +54,7 @@ class ShopPage extends StatelessWidget {
               description:
                   'Akses berbagai konten premium dengan bebas selama 1 bulan',
               type: "premium",
-              price: 'Rp15.000',
+              price: 'Rp20.000',
             ),
             const SizedBox(height: 24),
             buildSectionTitle('Penukaran Koin'),
