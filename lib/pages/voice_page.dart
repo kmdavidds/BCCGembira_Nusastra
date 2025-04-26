@@ -6,7 +6,7 @@ class VoicePage extends StatefulWidget {
   VoicePage({Key? key}) : super(key: key);
 
   @override
-  _VoicePageState createState() => _VoicePageState();
+  State<VoicePage> createState() => _VoicePageState();
 }
 
 class _VoicePageState extends State<VoicePage> {
@@ -28,7 +28,7 @@ class _VoicePageState extends State<VoicePage> {
 
   /// Each time to start a speech recognition session
   void _startListening() async {
-    await _speechToText.listen(onResult: _onSpeechResult);
+    await _speechToText.listen(onResult: _onSpeechResult, localeId: "id_ID");
     setState(() {});
   }
 

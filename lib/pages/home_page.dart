@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
       onDestinationSelected: (int index) {
         setter.setCurrentPageIndex(index);
       },
-      indicatorColor: Colors.deepPurple[700],
+      indicatorColor: Color(0xFF482B0C),
       selectedIndex: value.currentPageIndex,
       destinations: const <Widget>[
         NavigationDestination(

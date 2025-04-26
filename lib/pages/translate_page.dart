@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/pages/photo_page.dart';
 import 'package:provider/provider.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 class TranslatePage extends StatefulWidget {
   const TranslatePage({super.key});
@@ -16,6 +18,38 @@ class _TranslatePageState extends State<TranslatePage> {
   String? _targetLanguage;
   final TextEditingController _textController = TextEditingController();
   int _currentIndex = 2; // Set default index to "translate"
+  final SpeechToText _speechToText = SpeechToText();
+  bool _speechEnabled = false;
+  String _lastWords = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _initSpeech();
+  }
+
+  // This has to happen only once per app
+  void _initSpeech() async {
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
+  }
+
+  /// Each time to start a speech recognition session
+  void _startListening() async {
+    await _speechToText.listen(onResult: _onSpeechResult);
+    setState(() {});
+  }
+
+  void _stopListening() async {
+    await _speechToText.stop();
+    setState(() {});
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      _lastWords = result.recognizedWords;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +167,18 @@ class _TranslatePageState extends State<TranslatePage> {
             maxLines: null,
           ),
           const SizedBox(height: 16),
+          Text(
+            // If listening is active show the recognized words
+            _speechToText.isListening
+                ? _lastWords
+                // If listening isn't active but could be tell the user
+                // how to start it, otherwise indicate that speech
+                // recognition is not yet ready or not supported on
+                // the target device
+                : _speechEnabled
+                    ? 'Tap the microphone to start listening...'
+                    : 'Speech not available',
+          ),
           Row(
             children: [
               IconButton(
@@ -145,17 +191,13 @@ class _TranslatePageState extends State<TranslatePage> {
               const SizedBox(width: 8),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Add your translation logic here
-                    final text = _textController.text;
-                    final from = _sourceLanguage;
-                    final to = _targetLanguage;
-                    if (text.isNotEmpty && from != null && to != null) {
-                      // Perform translation
-                      print('Translating "$text" from $from to $to');
-                    }
-                  },
-                  child: const Text('Translate'),
+                  onPressed:
+                      // If not yet listening for speech start, otherwise stop
+                      _speechToText.isNotListening
+                          ? _startListening
+                          : _stopListening,
+                  child: Icon(
+                      _speechToText.isNotListening ? Icons.mic_off : Icons.mic),
                 ),
               ),
             ],
