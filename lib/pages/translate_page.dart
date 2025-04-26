@@ -71,37 +71,6 @@ class _TranslatePageState extends State<TranslatePage> {
             _buildCameraTab(),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-              // Add navigation logic here if needed
-            });
-          },
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.quiz),
-              label: 'Quiz',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.translate),
-              label: 'Translate',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.people),
-              label: 'Friend',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.map),
-              label: 'Maps',
-            ),
-          ],
-        ),
       ),
     );
   }
