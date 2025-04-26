@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/pages/photo_page.dart';
@@ -16,8 +15,7 @@ class TranslatePage extends StatefulWidget {
 class _TranslatePageState extends State<TranslatePage> {
   String? _sourceLanguage;
   String? _targetLanguage;
-  final TextEditingController _textController = TextEditingController();
-  int _currentIndex = 2; // Set default index to "translate"
+  final TextEditingController _textController = TextEditingController(); 
   final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
