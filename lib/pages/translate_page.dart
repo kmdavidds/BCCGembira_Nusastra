@@ -15,7 +15,7 @@ class TranslatePage extends StatefulWidget {
 class _TranslatePageState extends State<TranslatePage> {
   String? _sourceLanguage;
   String? _targetLanguage;
-  final TextEditingController _textController = TextEditingController(); 
+  final TextEditingController _textController = TextEditingController();
   final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
@@ -55,13 +55,22 @@ class _TranslatePageState extends State<TranslatePage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          bottom: const TabBar(
+          backgroundColor: const Color(0xFF482B0C), // Dark brown color
+          elevation: 0,
+          automaticallyImplyLeading: false, // Removes the leading back button
+          bottom: TabBar(
             tabs: [
-              Tab(text: 'Text'),
-              Tab(text: 'Camera'),
+              Tab(icon: Image.asset('assets/alpha.png')), // Logo of Aa
+              Tab(icon: Image.asset('assets/scanner.png')), // Scanner icon
             ],
           ),
-          title: const Text('Translate'),
+          title: Row(
+            children: [
+              Image.asset('assets/nusalingo.png', height: 24),
+              const SizedBox(width: 8),
+              const Text('Language Translator', style: TextStyle(color: Colors.white, fontSize: 16)),
+            ],
+          ),
         ),
         body: TabBarView(
           children: [
