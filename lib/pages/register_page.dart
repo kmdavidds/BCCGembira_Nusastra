@@ -244,12 +244,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                 debugPrint(_password);
                                 ApiService.register(_name, _email, _password);
 
-                                var token =
-                                    await ApiService.login(_email, _password);
-
-                                if (!context.mounted) return;
-
-                                setter.setToken(token.token);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

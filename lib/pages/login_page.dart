@@ -1,9 +1,10 @@
 // filepath: /home/kmdavidds/Projects/flutter/nusastra/lib/pages/login_page.dart
 import 'package:flutter/material.dart';
+import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/pages/home_page.dart';
 import 'package:nusastra/pages/register_page.dart';
-import 'package:nusastra/pages/translate_page.dart';
 import 'package:nusastra/services/api_service.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -34,51 +35,99 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Center(
                       child: Image.asset(
-                        'assets/logo.png', // Replace with your image asset
+                        'assets/logolong.png', // Replace with your image asset
                         height: 100,
                       ),
                     ),
                     const SizedBox(height: 16),
                     const Center(
                       child: Text(
-                        'Silakan masuk dengan email dan password Anda!',
+                        'Silakan masuk dengan email dan kata sandi Anda!',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          height: 1.2,
+                          letterSpacing: 0,
+                          color: Color(0xFFAFACA9),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                     const SizedBox(height: 16),
-                    const Text('Email'),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Enter your email',
+                    const Text(
+                      'Email',
+                      style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 14,
+                        color: Color(0xFF000000),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        }
-                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                          return 'Please enter a valid email';
-                        }
-                        setState(() {
-                          _email = value;
-                        });
-                        return null;
-                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2, horizontal: 15),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFFFFF),
+                        border: Border.all(color: const Color(0xFFE2E1E5)),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Email',
+                          hintStyle: TextStyle(color: Color(0xFFD2D2D2)),
+                          border: InputBorder.none,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Silakan masukkan email Anda';
+                          }
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return 'Silakan masukkan email yang valid';
+                          }
+                          setState(() {
+                            _email = value;
+                          });
+                          return null;
+                        },
+                      ),
                     ),
                     const SizedBox(height: 16),
-                    const Text('Password'),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter your password',
+                    const Text(
+                      'Kata Sandi',
+                      style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 14,
+                        color: Color(0xFF000000),
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        setState(() {
-                          _password = value;
-                        });
-                        return null;
-                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2, horizontal: 15),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFFFFF),
+                        border: Border.all(color: const Color(0xFFE2E1E5)),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: TextFormField(
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Kata Sandi',
+                          hintStyle: TextStyle(color: Color(0xFFD2D2D2)),
+                          border: InputBorder.none,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Silakan masukkan kata sandi Anda';
+                          }
+                          setState(() {
+                            _password = value;
+                          });
+                          return null;
+                        },
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -94,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                                 });
                               },
                             ),
-                            const Text('Remember me'),
+                            const Text('Ingat saya'),
                           ],
                         ),
                         GestureDetector(
@@ -102,9 +151,9 @@ class _LoginPageState extends State<LoginPage> {
                             // Navigate to forgot password page
                           },
                           child: const Text(
-                            'Forgot Password?',
+                            'Lupa Kata Sandi?',
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: Color(0xFF905718),
                               decoration: TextDecoration.underline,
                             ),
                           ),
@@ -112,27 +161,56 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Center(
+                    Consumer<AppModel>(builder: (context, value, child) {
+                      var setter = context.read<AppModel>();
+                      var msgr = ScaffoldMessenger.of(context);
+                      return Center(
                       child: FilledButton(
-                        onPressed: () {
-                          if (_formKey.currentState?.validate() == true) {
-                            debugPrint(_email);
-                            debugPrint(_password);
-                            ApiService.login(_email, _password);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                        style: ButtonStyle(
+                        minimumSize:
+                          WidgetStateProperty.all(const Size(334, 53)),
+                        backgroundColor: WidgetStateProperty.all(
+                          const Color(0xFF482B0C)),
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          ),
+                        ),
+                        ),
+                        onPressed: () async {
+                        if (_formKey.currentState?.validate() == true) {
+                          try {
+                          debugPrint(_email);
+                          debugPrint(_password);
+                          var token =
+                            await ApiService.login(_email, _password);
+
+                          if (!context.mounted) return;
+
+                          setter.setToken(token.token);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePage()),
+                          );
+                          } catch (e) {
+                          if (!context.mounted) return;
+
+                          msgr.showSnackBar(SnackBar(
+                            content: Text(e.toString()),
+                          ));
                           }
+                        }
                         },
-                        child: const Text('Login'),
+                        child: const Text('Masuk'),
                       ),
-                    ),
+                      );
+                    }),
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Don\'t have an account? '),
+                        const Text('Belum punya akun? '),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -141,10 +219,9 @@ class _LoginPageState extends State<LoginPage> {
                                     builder: (context) => RegisterPage()));
                           },
                           child: const Text(
-                            'Register',
+                            'Daftar',
                             style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
+                              color: Color(0xFF905718),
                             ),
                           ),
                         ),
