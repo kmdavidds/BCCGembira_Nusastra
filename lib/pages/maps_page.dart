@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:nusastra/pages/quiz_page.dart';
 
 class LanguageData {
   final String name;
@@ -48,6 +49,7 @@ class _MapsPageState extends State<MapsPage> {
   LanguageData? _selectedLanguage;
   bool _isDetailVisible = false;
   List<LanguageData> _filteredLanguages = [];
+  List<LanguageData> _allLanguages = [];
 
   @override
   void initState() {
@@ -60,6 +62,7 @@ class _MapsPageState extends State<MapsPage> {
     final List<dynamic> data = jsonDecode(response);
     final List<LanguageData> languages = data.map((json) => LanguageData.fromJson(json)).toList();
     setState(() {
+      _allLanguages = languages;
       _filteredLanguages = languages;
     });
   }
@@ -72,6 +75,41 @@ class _MapsPageState extends State<MapsPage> {
 
     // Animasi ke lokasi bahasa yang dipilih
     _mapController.move(language.position, 8.0);
+  }
+
+  void _searchLanguage(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        _filteredLanguages = List.from(_allLanguages);
+        _isDetailVisible = false;
+      });
+    } else {
+      final List<LanguageData> results = _allLanguages.where((language) =>
+          language.name.toLowerCase().contains(query.toLowerCase()) ||
+          language.region.toLowerCase().contains(query.toLowerCase())).toList();
+
+      if (results.isNotEmpty) {
+        setState(() {
+          _filteredLanguages = _allLanguages; // Show all languages
+          _isDetailVisible = false;
+        });
+
+        // Animate to the first result and then zoom in
+        _mapController.move(results.first.position, _mapController.zoom);
+        Future.delayed(const Duration(seconds: 1), () {
+          _mapController.move(results.first.position, 8.0);
+          setState(() {
+            _selectedLanguage = results.first;
+            _isDetailVisible = true;
+          });
+        });
+      } else {
+        setState(() {
+          _filteredLanguages = [];
+          _isDetailVisible = false;
+        });
+      }
+    }
   }
 
   @override
@@ -162,20 +200,7 @@ class _MapsPageState extends State<MapsPage> {
             filled: true,
             fillColor: Colors.white,
           ),
-          onChanged: (value) {
-            // Implementasi pencarian
-            setState(() {
-              if (value.isEmpty) {
-                _filteredLanguages = List.from(_filteredLanguages);
-              } else {
-                _filteredLanguages = _filteredLanguages
-                    .where((language) =>
-                        language.name.toLowerCase().contains(value.toLowerCase()) ||
-                        language.region.toLowerCase().contains(value.toLowerCase()))
-                    .toList();
-              }
-            });
-          },
+          onChanged: _searchLanguage,
         ),
       ),
     );
@@ -265,7 +290,12 @@ class _MapsPageState extends State<MapsPage> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const QuizPage()),
+                                );
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFCA6B2D),
                                 foregroundColor: Colors.white,
