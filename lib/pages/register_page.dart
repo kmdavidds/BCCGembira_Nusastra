@@ -264,8 +264,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: const Text(
                             'Masuk',
                             style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
+                              color: Color(0xFF905718),
+                              
                             ),
                           ),
                         ),
