@@ -165,45 +165,46 @@ class _LoginPageState extends State<LoginPage> {
                       var setter = context.read<AppModel>();
                       var msgr = ScaffoldMessenger.of(context);
                       return Center(
-                      child: FilledButton(
-                        style: ButtonStyle(
-                        minimumSize:
-                          WidgetStateProperty.all(const Size(334, 53)),
-                        backgroundColor: WidgetStateProperty.all(
-                          const Color(0xFF482B0C)),
-                        shape: WidgetStateProperty.all(
-                          RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
+                        child: FilledButton(
+                          style: ButtonStyle(
+                            minimumSize:
+                                WidgetStateProperty.all(const Size(334, 53)),
+                            backgroundColor: WidgetStateProperty.all(
+                                const Color(0xFF482B0C)),
+                            shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                            ),
                           ),
+                          onPressed: () async {
+                            if (_formKey.currentState?.validate() == true) {
+                              try {
+                                debugPrint(_email);
+                                debugPrint(_password);
+                                var token =
+                                    await ApiService.login(_email, _password);
+
+                                if (!context.mounted) return;
+
+                                setter.setToken(token.token);
+                                setter.setDisplayName(token.displayName);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()),
+                                );
+                              } catch (e) {
+                                if (!context.mounted) return;
+
+                                msgr.showSnackBar(SnackBar(
+                                  content: Text(e.toString()),
+                                ));
+                              }
+                            }
+                          },
+                          child: const Text('Masuk'),
                         ),
-                        ),
-                        onPressed: () async {
-                        if (_formKey.currentState?.validate() == true) {
-                          try {
-                          debugPrint(_email);
-                          debugPrint(_password);
-                          // var token =
-                          //   await ApiService.login(_email, _password);
-
-                          if (!context.mounted) return;
-
-                          // setter.setToken(token.token);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomePage()),
-                          );
-                          } catch (e) {
-                          if (!context.mounted) return;
-
-                          msgr.showSnackBar(SnackBar(
-                            content: Text(e.toString()),
-                          ));
-                          }
-                        }
-                        },
-                        child: const Text('Masuk'),
-                      ),
                       );
                     }),
                     const SizedBox(height: 16),

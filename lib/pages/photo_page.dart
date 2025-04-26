@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:nusastra/models/app_model.dart';
 import 'package:nusastra/services/api_service.dart';
+import 'package:provider/provider.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -60,41 +62,47 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        // Provide an onPressed callback.
-        onPressed: () async {
-          // Take the Picture in a try / catch block. If anything goes wrong,
-          // catch the error.
-          try {
-            // Ensure that the camera is initialized.
-            await _initializeControllerFuture;
+      floatingActionButton: Consumer<AppModel>(
+        builder: (context, value, child) {
+          var setter = context.read<AppModel>();
+          var msgr = ScaffoldMessenger.of(context);
+          return FilledButton(
+            onPressed: () async {
+              // Take the Picture in a try / catch block. If anything goes wrong,
+              // catch the error.
+              try {
+                // Ensure that the camera is initialized.
+                await _initializeControllerFuture;
 
-            // Attempt to take a picture and get the file `image`
-            // where it was saved.
-            final image = await _controller.takePicture();
+                // Attempt to take a picture and get the file `image`
+                // where it was saved.
+                final image = await _controller.takePicture();
 
-            if (!context.mounted) return;
+                if (!context.mounted) return;
 
-            File file = File(image.path);
+                File file = File(image.path);
 
-            String body = await ApiService.uploadImage(file);
+                String body = await ApiService.uploadImage(setter.token, file);
 
-            // If the picture was taken, display it on a new screen.
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
-                  imagePath: image.path,
-                ),
-              ),
-            );
-          } catch (e) {
-            // If an error occurs, log the error to the console.
-            debugPrint(e.toString());
-          }
+                // If the picture was taken, display it on a new screen.
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DisplayPictureScreen(
+                      // Pass the automatically generated path to
+                      // the DisplayPictureScreen widget.
+                      imagePath: image.path,
+                    ),
+                  ),
+                );
+              } catch (e) {
+                // If an error occurs, log the error to the console.
+                msgr.showSnackBar(SnackBar(content: Text('Error: $e')));
+                debugPrint(e.toString());
+              }
+            },
+            child: const Icon(Icons.camera_alt),
+          );
         },
-        child: const Icon(Icons.camera_alt),
       ),
     );
   }

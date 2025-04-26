@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nusastra/models/app_model.dart';
+import 'package:nusastra/pages/home_widget.dart';
 import 'package:nusastra/pages/quiz_page.dart';
 import 'package:nusastra/pages/test.dart';
 import 'package:nusastra/pages/translate_page.dart';
@@ -14,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isLoading = true;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           bottomNavigationBar: customNavBar(value, setter),
           body: [
-            isLoading ? _loadingWidget() : homeClassroom(value),
+            HomeWidget(),
             QuizPage(),
             TranslatePage(),
             TestPage(),
@@ -37,33 +37,6 @@ class _HomePageState extends State<HomePage> {
           ][value.currentPageIndex],
         );
       },
-    );
-  }
-
-  Widget _loadingWidget() {
-    return const Center(child: CircularProgressIndicator());
-  }
-
-  Center homeClassroom(AppModel value) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  const Text("Selamat Datang!"),
-                  Text(value.displayName),
-                ],
-              ),
-              const Icon(Icons.person_pin),
-            ],
-          ),
-        ],
-      ),
     );
   }
 

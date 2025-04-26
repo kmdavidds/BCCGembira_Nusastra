@@ -7,7 +7,7 @@ import 'package:nusastra/models/token.dart';
 
 class ApiService {
   static const String baseUrl =
-      'https://2699-202-93-245-215.ngrok-free.app/api/v1'; // Replace with your API endpoint
+      'https://87be-202-93-245-215.ngrok-free.app/api/v1'; // Replace with your API endpoint
 
   static String parseError(Map<String, dynamic> json) {
     return switch (json) {
@@ -64,7 +64,7 @@ class ApiService {
     return "Success";
   }
 
-  static Future<String> uploadImage(File file) async {
+  static Future<String> uploadImage(String token, File file) async {
     final dio = Dio(); // With default `Options`.
     String url = ('$baseUrl/chats/create-chat-ocr');
     final formData = FormData.fromMap({
@@ -74,8 +74,7 @@ class ApiService {
       ),
     });
 
-    dio.options.headers['Authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZjE0ZWE3YWMtMmMyMy00MzhkLWE4NzMtZGEyNTY2ZThlOTQyIiwidXNlcm5hbWUiOiJyb2JpbjEyMzQiLCJleHAiOjE3NDU2NzQ5Mjh9.Y4JIHvBT4qteVeA-QtPtseWg1_R4DHNbdODvPTUc5HE';
+    dio.options.headers['Authorization'] = 'Bearer $token';
 
     dio.options.headers['Content-Type'] = 'multipart/form-data';
 
@@ -83,5 +82,55 @@ class ApiService {
     final response = await dio.post(url, data: formData);
 
     return response.toString();
+  }
+
+  static Future<void> buy(String token, String type) async {
+    final url = Uri.parse('$baseUrl/users/register');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'type': type,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw HttpException('Failed to register: ${response.body}');
+    }
+
+    return;
+  }
+
+  static Future<String> translate(String token, String content) async {
+    final url = Uri.parse('$baseUrl/chats/create-chat');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        "content":
+            'Change your actual language setting, translate this from Indonesian to Balinese $content',
+        "type": "text",
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw HttpException('Failed to register: ${response.body}');
+    }
+
+    final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
+    final translation = responseBody['translation'] as String?;
+    if (translation == null) {
+      throw HttpException(
+          'Translation field is missing in the response: ${response.body}');
+    }
+    return translation;
   }
 }
