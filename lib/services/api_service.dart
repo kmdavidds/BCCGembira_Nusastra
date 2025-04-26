@@ -116,7 +116,7 @@ class ApiService {
     return snapURL;
   }
 
-  static Future<String> translate(String token, String content) async {
+  static Future<String> translate(String token, String content, String source, String target) async {
     final url = Uri.parse('$baseUrl/chats/create-chat');
     final response = await http.post(
       url,
@@ -126,21 +126,24 @@ class ApiService {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
-        "content":
-            'Change your actual language setting, translate this from Indonesian to Balinese $content',
-        "type": "text",
+        "content": content,
+        "source_language": source,
+        "target_language": target
       }),
     );
 
     if (response.statusCode != 200) {
-      throw HttpException('Failed to register: ${response.body}');
+      throw HttpException('Failed to translate: ${response.body}');
     }
 
     final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
-    final translation = responseBody['translation'] as String?;
+    final chats = responseBody['chats'] as Map<String, dynamic>?;
+    if (chats == null) {
+      throw HttpException('Chats field is missing in the response: ${response.body}');
+    }
+    final translation = chats['translation'] as String?;
     if (translation == null) {
-      throw HttpException(
-          'Translation field is missing in the response: ${response.body}');
+      throw HttpException('Translation field is missing in the chats object: ${response.body}');
     }
     return translation;
   }

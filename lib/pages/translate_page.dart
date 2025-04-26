@@ -207,7 +207,7 @@ class _TranslatePageState extends State<TranslatePage> {
                   return ElevatedButton(
                     onPressed: () async {
                       String translation = await ApiService.translate(
-                          value.token, _textController.text);
+                          value.token, _textController.text, _sourceLanguage!, _targetLanguage!);
                       setState(() {
                         _translatedText = translation;
                       });
